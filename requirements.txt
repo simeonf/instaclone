@@ -1,0 +1,7 @@
+Fabric==1.5.3
+Flask==0.9
+Flask-MySQL==1.2
+Jinja2==2.6
+Werkzeug==0.8.3
+paramiko==1.9.0
+pycrypto==2.6

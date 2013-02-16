@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block main %}
+<script type="text/javascript">
+  $(function(){
+    $("#like").click(function(evt){
+      var id = {{ image.id }};
+      console.log(evt);
+      evt.preventDefault();
+      var $link = $(this);
+      $.post("/like/" + id, {'like': id}, function(){
+          $link.text($link.text() + " +1");
+          $link.off();
+       });
+    });
+  });
+</script>
+
+<h1>{{ image.name }} <a id="like" href="#">Like</a></h1><br>
+<p>
+  <img src="{{ image|image_path }}">
+  <br>Uploaded {{ image.dt|naturaldate }}.
+  {% if image.parent_id %}See <a href="./{{ image.parent_id }}">Original image</a>{% endif %}
+</p>
+
+<h2>Want to tweak this image?</h2>
+  <p>Create a new image by applying a filter:</p>
+  <form action="" method="POST" class="form-search">
+    <select name="filter">
+      <option>---</option>
+      {% for name in filters %}
+       <option>{{ name }}</option>
+      {% endfor %}
+    </select>
+    <input type="submit" value="GO">
+    </form>
+{% endblock %}
+
+
+{% block sidebar %}
+ <ul class="nav nav-list">
+  <li class="nav-header">Images Made from this Image</li>
+  {% for image in related %}
+      <li><a href="/image/{{ image.id }}">
+          <img width="200" src="{{ image|image_path }}"></a></li>
+  {% else %}
+      <li>No images found</li>
+  {% endfor %}
+ </ul>
+ {{ super() }}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block main %}
+<script src="/static/jquery.cycle2.min.js"></script>
+<script type="text/javascript">
+$(function(){
+   $('.cycle-slideshow img').each(function(){
+      $this = $(this);
+      if($this.height() > 400){
+        ratio = $this.height()/$this.width();
+        $this.attr('height', '400');
+        $this.attr('width', 400/ratio);
+      }
+   });
+});
+</script>
+<div class="cycle-slideshow" style="width:80%;height:450px;">
+  {% for row in rows %}
+  {#
+    <a href="/image/{{ row.id }}"><img src="{{ row|image_path }}" data-title="{{ row.name }}" alt=""></a>
+  #}
+    <img src="{{ row|image_path }}" data-title="{{ row.name }}" alt="">
+  {% endfor %}
+</div>
+
+<p>Add beautiful effects to your pictures and share them with friends...</p>
+{% endblock %}
+
