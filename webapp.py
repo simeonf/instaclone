@@ -8,7 +8,8 @@ from filters import registry, convert_image
 # configuration
 import config
 app = config.app
-    
+util.config_templates(config.app)
+
 @app.route('/')
 def front_page():
     db = util.get_db()
@@ -79,7 +80,8 @@ def upload():
     else:
         return render_template('upload.html', errors=errors)
 
-    
+
+
 if __name__ == "__main__":
-    util.config_templates(config.app)
+
     config.app.run()
