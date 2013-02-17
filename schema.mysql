@@ -1,3 +1,8 @@
+GRANT ALL ON instaclone.* TO 'instaclone'@'localhost' IDENTIFIED BY 'instaclone';
+
+CREATE DATABASE instaclone CHARACTER SET = 'UTF8';
+
+USE instaclone;
 
 CREATE TABLE `instaclone_images` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
