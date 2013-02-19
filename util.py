@@ -2,7 +2,7 @@ import os, tempfile
 import MySQLdb
 from datetime import datetime
 
-from config import db
+from config import db, DIR
 
 global_registry = {}
 filter_registry = {}
@@ -21,9 +21,6 @@ class Image(object):
     def absolute_url(self):
         directory = Image.image_location(self.parent_id, self.id)
         return os.path.join(directory, self.image)
-
-    def get_relative_path(self):
-        return "." + self.absolute_url()
 
     def __getattr__(self, attribute):
         """Map attribute requests to keys of row instance."""
@@ -135,6 +132,8 @@ def new_filename(filename):
                                 dir=directory)
     # Close the unix file descriptor returned by mkstemp
     os.close(fd)
+    # fix perms so web server will be able to read file
+    os.chmod(fn, 0644)
     return fn
 
 def insert_image(image, name, parent=None, mv=True):
@@ -158,7 +157,7 @@ def insert_image(image, name, parent=None, mv=True):
     pk = db.lastrowid
     # If handling a file upload will need to move from /tmp location
     if mv:
-        directory = "." + Image.image_location(pk, parent)
+        directory = DIR + Image.image_location(pk, parent)
         # make parent directory if necessary
         if not os.path.isdir(directory):
             os.mkdir(directory)

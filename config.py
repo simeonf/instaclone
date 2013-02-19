@@ -1,5 +1,9 @@
+import os
 from flask import Flask
 from flaskext.mysql import MySQL
+
+# project root directory
+DIR = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = True
 SECRET_KEY = 'This !s my secre+ key!'

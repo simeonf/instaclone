@@ -34,7 +34,7 @@ def pic(pk):
         if filter_name in registry:
             im = util.Image(image)
             # Get current file
-            image_path = im.get_relative_path()
+            image_path = DIR + im.absolute_url()
             # Get new unique filename
             new_filename = util.new_filename(image_path)
             # copy old to new by way of selected filter
